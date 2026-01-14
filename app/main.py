@@ -8,19 +8,14 @@ class Person:
 
 
 def create_person_list(people: list[dict]) -> list[Person]:
-    person_list = []
-
-    # Step 1: Create all Person instances
-    for person in people:
-        person_obj = Person(person["name"], person["age"])
-        person_list.append(person_obj)
+    person_list = [Person(person["name"], person["age"]) for person in people]
 
     # Step 2: Link wife/husband attributes
     for person in people:
         current = Person.people[person["name"]]
-        if "wife" in person and person["wife"]:
+        if person.get("wife"):
             current.wife = Person.people[person["wife"]]
-        if "husband" in person and person["husband"]:
+        if person.get("husband"):
             current.husband = Person.people[person["husband"]]
 
     return person_list
